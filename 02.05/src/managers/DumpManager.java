@@ -53,6 +53,8 @@ public class DumpManager {
             }
 
             writer = new OutputStreamWriter(new FileOutputStream(fileName));
+            //
+
             try {
                 writer.write(csv);
                 writer.flush();

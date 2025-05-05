@@ -33,7 +33,7 @@ public class Main {
             register("exit", new Exit(console));
             register("remove_at", new RemoveAt(console, collectionManager));
             //register("add_if_max", new AddIfMax(console,collectionManager));
-            //register("reorder", new Reoorder(console,collectionManager));
+            register("reorder", new Reorder(console,collectionManager));
             //register("remove_any_by_venue", new RemoveAnyByVenue(console, collectionManager));
             //register("min_by_name", new MaxByCharacter(console, collectionManager));
             register("print_field_descending_price", new PrintFieldDescendingPrice(console, collectionManager));
