@@ -44,6 +44,9 @@ public class Ticket extends Element implements Validatable, Serializable {
 
 
     public static Ticket fromArray(String[] a){
+        if (a.length!=8){
+            return null;
+        }
         Integer id; //0 Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
         String name; //1 Поле не может быть null, Строка не может быть пустой
         Coordinates coordinates; //2 Поле не может быть null
@@ -57,11 +60,19 @@ public class Ticket extends Element implements Validatable, Serializable {
             try{ id = Integer.parseInt(a[0]);} catch (NumberFormatException e) {id = null;}
             name = a[1];
             try {coordinates = new Coordinates(a[2]);}catch (NumberFormatException e){coordinates = new Coordinates(0.0,0);}
-            try{ creationDate = LocalDate.parse(a[3], DateTimeFormatter.ISO_DATE);} catch (DateTimeException e){creationDate = null;};
+            try{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                creationDate = LocalDate.parse(a[3], formatter);
+            } catch (DateTimeException e){creationDate = null;};
             try { price = Double.parseDouble(a[4]);} catch (NumberFormatException e){price = 1.0;}
             comment = a[5];
             try { type = TicketType.valueOf(a[6]);} catch (NullPointerException | IllegalArgumentException  e) { type = null; }
+
+
             venue = new Venue(a[7]);
+            if (venue.getCapacity()==-1 || venue.getAddress().getStreet()==null  ){
+                return null;
+            }
             return new Ticket(id,name,coordinates,creationDate,price,comment,type,venue);
 
         } catch (ArrayIndexOutOfBoundsException e){}
@@ -77,7 +88,7 @@ public class Ticket extends Element implements Validatable, Serializable {
         list.add(Double.valueOf(e.getPrice()).toString());
         list.add(e.getComment());
         list.add(e.getType().toString());
-        list.add(e.getVenue().toString());
+        list.add(e.getVenue().toString(true));
         return list.toArray(new String[0]);
     }
 
@@ -99,6 +110,8 @@ public class Ticket extends Element implements Validatable, Serializable {
     }
 
     public boolean validate() {
+        if (venue.getCapacity()==-1) return false;
+        if (venue.getAddress()==null) return false;
         if (id <= 0|| id==null) return false;
         if (name == null || name.isEmpty()) return false;
         if (coordinates == null || !coordinates.validate()) return false;
@@ -119,7 +132,7 @@ public class Ticket extends Element implements Validatable, Serializable {
     public int getId() {return id;}
     public String getName() {return name;}
     public Coordinates getCoordinates() {return coordinates;}
-    public double getPrice() {return price;}
+    public Double getPrice() {return price;}
     public String getComment(){ return comment;}
     public LocalDate getCreationDate(){return  creationDate;}
     public TicketType getType(){return type;}

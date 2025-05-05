@@ -12,6 +12,9 @@ public class Coordinates implements Validatable {
 
     }
 
+    public int getY(){
+        return y;
+    }
     public Coordinates (String s) {
         try {
             try { this.x = Double.parseDouble(s.split(";")[0]); } catch (NumberFormatException e) { }

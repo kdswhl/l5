@@ -25,16 +25,18 @@ public class Main {
             register("info", new Info(console, collectionManager));
             register("show", new Show(console, collectionManager));
             register("add", new Add(console, collectionManager));
-            //register("update", new Update(console, collectionManager));
-            //register("remove_by_id", new RemoveById(console, collectionManager));
+            register("update", new Update(console, collectionManager));
+            register("remove_by_id", new RemoveById(console, collectionManager));
             register("clear", new Clear(console, collectionManager));
             register("save", new Save(console, collectionManager));
-            //register("execute_script", new ExecuteScript(console));
-            //register("exit", new Exit(console));
-            //register("remove_at", new RemoveAt(console, collectionManager));
+            register("execute_script", new ExecuteScript(console));
+            register("exit", new Exit(console));
+            register("remove_at", new RemoveAt(console, collectionManager));
+            //register("add_if_max", new AddIfMax(console,collectionManager));
+            //register("reorder", new Reoorder(console,collectionManager));
             //register("remove_any_by_venue", new RemoveAnyByVenue(console, collectionManager));
             //register("min_by_name", new MaxByCharacter(console, collectionManager));
-            //register("print_field_descending_price", new PrintFieldDescendingPrice(console, collectionManager));
+            register("print_field_descending_price", new PrintFieldDescendingPrice(console, collectionManager));
         }};
 
         new Runner(console, commandManager).interactiveMode();

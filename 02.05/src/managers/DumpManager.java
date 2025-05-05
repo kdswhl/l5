@@ -8,6 +8,7 @@ import java.io.File;
 import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import utility.Console;
@@ -32,7 +33,7 @@ public class DumpManager {
             StringBuilder csv = new StringBuilder();
             for (Ticket ticket : collection) {
                 String[] fields = Ticket.toArray(ticket);
-                csv.append(String.join("$", fields)).append("\n");
+                csv.append(String.join(", ", fields)).append("\n");
             }
             return csv.toString();
         } catch (Exception e) {
@@ -41,17 +42,15 @@ public class DumpManager {
         }
     }
 
-    /**
-     * Записывает коллекцию в файл.
-     * @param collection коллекция
-     */
+
     public void writeCollection(Collection<Ticket> collection) {
         OutputStreamWriter writer = null;
-        OutputStreamWriter writer2 = null;
-        OutputStreamWriter writer3 = null;
         try {
             var csv = collection2CSV(collection);
-            if (csv == null) return;
+            if (csv == null) {
+                console.printError("Ошибка сериализации коллекции в CSV");
+                return;
+            }
 
             writer = new OutputStreamWriter(new FileOutputStream(fileName));
             try {
@@ -64,11 +63,13 @@ public class DumpManager {
         } catch (FileNotFoundException | NullPointerException e) {
             console.printError("Файл не найден");
         } finally {
-            try {
-                writer.close();
-            } catch(IOException e) {
-                console.printError("Ошибка закрытия файла");
+            if (writer != null){
+                try {
+                    writer.close();
+                } catch(IOException e) {
+                    console.printError("Ошибка закрытия файла");
             }
+                }
         }
     }
 
@@ -78,12 +79,14 @@ public class DumpManager {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (line.isEmpty()) continue;
-                String[] record = line.split("$");
+                String[] record = line.split(", ");
                 Ticket ticket = Ticket.fromArray(record);
-                if (ticket.validate()) {
+
+                if ((ticket!=null) && ticket.validate()) {
                     ds.add(ticket);
                 } else {
-                    console.printError("Файл содержит недействительные данные");
+                    console.printError("Неверное количество данных для создания Ticket");
+                    return null;
                 }
             }
             return ds;
@@ -98,8 +101,8 @@ public class DumpManager {
      * @return Считанная коллекция
      */
     public void readCollection(Collection<Ticket> collection) {
-        console.println("Попытка чтения файла: " + fileName);
         if (fileName != null && !fileName.isEmpty()) {
+            File file = new File(fileName);
             try (var fileReader = new Scanner(new File(fileName))) {
                 var s = new StringBuilder("");
                 while (fileReader.hasNextLine()) {
@@ -107,13 +110,15 @@ public class DumpManager {
                     s.append("\n");
                 }
                 collection.clear();
-                for (var e: CSV2collection(s.toString()))
-                    collection.add(e);
-                if (collection != null) {
-                    console.println("Коллекция успешна загружена!");
-                    return;
-                } else
-                    console.printError("В загрузочном файле не обнаружена необходимая коллекция!");
+                try {
+                    for (var e : CSV2collection(s.toString()))
+                        collection.add(e);
+                    if (collection != null) {
+                        console.println("Загрузка завершена!");
+                        return;
+                    } else
+                        console.printError("В загрузочном файле не обнаружена необходимая коллекция!");
+                } catch (NoSuchElementException e){}
             } catch (FileNotFoundException exception) {
                 console.printError("Загрузочный файл не найден!");
             } catch (IllegalStateException exception) {
@@ -125,4 +130,6 @@ public class DumpManager {
         }
         collection = new ArrayList<Ticket>();
     }
+
+
 }

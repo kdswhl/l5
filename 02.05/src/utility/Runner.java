@@ -33,7 +33,7 @@ public class Runner {
 
             while (true) {
                 console.prompt();
-                userCommand = (console.readln().trim() + " ").split(" ", 2);
+                userCommand = (console.readln().trim().toLowerCase() + " ").split(" ", 2);
                 userCommand[1] = userCommand[1].trim();
 
                 commandManager.addToHistory(userCommand[0]);

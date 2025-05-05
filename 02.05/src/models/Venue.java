@@ -15,22 +15,48 @@ public class Venue {
     }
 
     public Venue(String s){
-        try{ this.id = Integer.parseInt(s.split("| ")[0]);} catch (NumberFormatException e){return;}
-        this.name = s.split("| ")[1];
-        try{ this.capacity = Long.parseLong(s.split("| ")[2]);} catch (NumberFormatException e){return;}
-        this.address = new Address(s.split("| ")[3]);
+        if (s.split(" _ ").length!=4){
+            this.address = null;
+            this.id = null;
+            this.name = null;
+            this.capacity = -1;
+        }
+        else {
+            try {
+                this.id = Integer.parseInt(s.split(" _ ")[0]);
+            } catch (NumberFormatException e) {
+                return;
+            }
+            this.name = s.split(" _ ")[1];
 
+            try {
+                this.capacity = Long.parseLong(s.split(" _ ")[2]);
+            } catch (NumberFormatException e) {
+                return;
+            }
+            this.address = new Address(s.split(" _ ")[3]);
+        }
     }
 
 
     @Override
     public String toString() {
-        return "Venue {id: " + id + "| " +
-                "name: " + name + "| " +
-                "capacity: " + capacity + "| " +
-                address.toString();
+        return "Venue {id:" + id + " _ " +
+                "name:" + name + " _ " +
+                "capacity:" + capacity + " _ " +
+                address.toString() + "}";
     }
 
+    public String toString(boolean a){
+        return id+" _ " + name + " _ " + capacity + " _ " +
+                address.toString(true);
+    }
+
+    public Address getAddress(){
+        return address;
+    }
+
+    public long getCapacity(){return capacity;}
 }
 
 
