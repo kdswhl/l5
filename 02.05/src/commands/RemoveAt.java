@@ -6,7 +6,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'remove_at'. Удаляет элемент из коллекции.
- * @author dim0n4eg
  */
 public class RemoveAt extends Command {
     private final Console console;

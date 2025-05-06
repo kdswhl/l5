@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 /**
  * Команда 'help'. Выводит справку по доступным командам
- * @author dim0n4eg
  */
 public class Help extends Command {
     private final Console console;

@@ -1,6 +1,10 @@
 package commands;
 
 import utility.*;
+
+/**
+ * Интерфейс для выполнения команд.
+ */
 public interface Executable {
     /**
      * Выполнить что-либо.

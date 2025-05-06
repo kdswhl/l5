@@ -16,7 +16,6 @@ import models.*;
 
 /**
  * Использует файл для сохранения и загрузки коллекции.
- * @author dim0n4eg
  */
 public class DumpManager {
     private final String fileName;

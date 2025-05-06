@@ -1,13 +1,16 @@
 package models;
 
+import managers.CollectionManager;
 import utility.Console;
 
 import java.util.NoSuchElementException;
 
 public class Ask {
-    public static class AskBreak extends Exception {}
+    public static class AskBreak extends Exception {
 
-    public static Ticket askTicket(Console console, Integer id) throws AskBreak {
+    }
+
+    public static Ticket askTicket(Console console, Integer id, Integer idV) throws AskBreak {
         try {
             String name;
             while (true) {
@@ -20,7 +23,7 @@ public class Ask {
             var price = askPrice(console);
             var comment = askCommemt(console);
             var type = askType(console);
-            var venue = askVenue(console, 100);
+            var venue = askVenue(console, idV);
             return new Ticket(id, name, coordinates, price, comment, type, venue);
         } catch (NoSuchElementException | IllegalStateException e) {
             console.printError("Ошибка чтения");
@@ -139,7 +142,7 @@ public class Ask {
                 var line = console.readln().trim();
                 if (line.trim().equals("") | line.isEmpty()) {
                     price = null;
-                    break;
+                    return null;
                 }
                 if (!line.equals("")) {
                     try {

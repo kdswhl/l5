@@ -4,8 +4,7 @@ import utility.Console;
 import utility.ExecutionResponse;
 
 /**
- * Команда 'exit'. Завершает выполнение.
- * @author dim0n4eg
+ * Команда 'exit'. Завершает выполнение программы
  */
 public class Exit extends Command {
     private final Console console;

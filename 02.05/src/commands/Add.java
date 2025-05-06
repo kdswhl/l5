@@ -8,7 +8,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'add'. Добавляет новый элемент в коллекцию.
- * @author dim0n4eg
  */
 public class Add extends Command {
     private final Console console;
@@ -25,13 +24,12 @@ public class Add extends Command {
      * @return Успешность выполнения команды.
      */
 
-
     public ExecutionResponse apply(String[] arguments) {
         try {
             if (!arguments[1].isEmpty()) return new ExecutionResponse(false, "Неправильное количество аргументов!\nИспользование: '" + getName() + "'");
 
             console.println("* Создание нового Ticket:");
-            Ticket d = Ask.askTicket(console, collectionManager.getFreeId());
+            Ticket d = Ask.askTicket(console, collectionManager.getFreeId(), collectionManager.getFreeIdVenue());
 
             if (d != null && d.validate()) {
                 collectionManager.add(d);

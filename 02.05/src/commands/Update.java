@@ -7,7 +7,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'update'. Обновляет элемент коллекции.
- * @author dim0n4eg
  */
 public class Update extends Command {
     private final Console console;
@@ -36,7 +35,7 @@ public class Update extends Command {
             }
 
             console.println("Введите все параметры нового Ticket: ");
-            var d = Ask.askTicket(console, old.getId());
+            var d = Ask.askTicket(console, old.getId(), old.getVenue().getId());
             if (d != null && d.validate()) {
                 collectionManager.remove(old.getId());
                 collectionManager.add(d);

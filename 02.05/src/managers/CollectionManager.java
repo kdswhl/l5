@@ -5,6 +5,11 @@ import models.*;
 import java.time.LocalDate;
 import java.util.*;
 
+
+/**
+ * Класс для управления коллекцией билетов (Ticket).
+ * Обеспечивает операции добавления, удаления, обновления, сортировки, а также взаимодействие с хранилищем.
+ */
 public class CollectionManager {
     private Integer currentId = 1;
     private Map<Integer, Ticket> ticket = new HashMap<>();
@@ -16,6 +21,11 @@ public class CollectionManager {
     private LocalDate lastSaveTime;
     private final DumpManager dumpManager;
 
+
+    /**
+     * Конструктор менеджера коллекции.
+     * @param dumpManager менеджер для сериализации и десериализации данных.
+     */
     public CollectionManager(DumpManager dumpManager){
         this.lastInitTime = null;
         this.lastSaveTime = null;
@@ -25,7 +35,11 @@ public class CollectionManager {
     public LocalDate getLastInitTime(){return lastInitTime;}
     public LocalDate getLastSaveTime(){return lastSaveTime;}
     public ArrayList<Ticket> getCollection() {return collection;}
-
+    /**
+     * Получить билет по ID.
+     * @param id идентификатор билета.
+     * @return найденный билет или null.
+     */
     public Ticket byId(Integer id){
         return ticket.get(id);
     }
@@ -36,7 +50,9 @@ public class CollectionManager {
     public Ticket byDieId(long id) { try{for (var e:collectionDie)if (e.getId()==id)return e;return null;} catch (IndexOutOfBoundsException e) { return null; } }
 
 
-
+    /**
+     * Обновляет порядок коллекции, сортируя ее.
+     */
     public void update() {
         Collections.sort(collection);
     }
@@ -77,8 +93,7 @@ public class CollectionManager {
         ticket.put(e.getId(), e);
         ticket.put(re.getId(), re);
 
-        // addLog("swap " + id + " " + repId , false);
-        // replacement
+
         update();
         return true;
     }
@@ -153,17 +168,45 @@ public class CollectionManager {
         if (collection.isEmpty()) return "Коллекция пуста!";
 
         StringBuilder info = new StringBuilder();
-        for (var aboba : collection) {
-            info.append(aboba+"\n\n");
+        for (var i : collection) {
+            info.append(i+"\n\n");
         }
         return info.toString().trim();
     }
 
     public Integer getFreeId(){
-        while (byId(currentId) != null || byDieId(currentId) != null)
-            if (++currentId < 0)
-                currentId = 1;
+        currentId = 1;
+        while (true)
+            if (ID().contains(currentId)) {
+                currentId += 1;
+            } else{break;}
         return currentId;
+    }
+
+    protected LinkedList<Integer> ID() {
+        var ll = new LinkedList<Integer>();
+        for (var e : this.collection) {
+            ll.add(e.getId());
+        }
+        return ll;
+    }
+
+
+    public Integer getFreeIdVenue(){
+        currentId = 1;
+        while (true)
+            if (IDVenue().contains(currentId)) {
+                currentId += 1;
+            } else{break;}
+        return currentId;
+    }
+
+    protected LinkedList<Integer> IDVenue() {
+        var ll = new LinkedList<Integer>();
+        for (var e : this.collection) {
+            ll.add(e.getVenue().getId());
+        }
+        return ll;
     }
 }
 

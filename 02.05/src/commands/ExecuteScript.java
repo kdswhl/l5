@@ -5,7 +5,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'execute_script'. Выполнить скрипт из файла.
- * @author dim0n4eg
  */
 public class ExecuteScript extends Command {
     private final Console console;

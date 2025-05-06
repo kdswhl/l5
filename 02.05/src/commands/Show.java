@@ -6,7 +6,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'show'. Выводит все элементы коллекции.
- * @author dim0n4eg
  */
 public class Show extends Command {
     private final Console console;

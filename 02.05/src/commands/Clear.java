@@ -6,8 +6,7 @@ import models.Ticket;
 import utility.ExecutionResponse;
 
 /**
- * Команда 'clear'. Очищает коллекцию.
- * @author dim0n4eg
+ * Команда 'clear'. Очищает коллекцию
  */
 public class Clear extends Command {
     private final Console console;

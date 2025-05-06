@@ -8,7 +8,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'info'. Выводит информацию о коллекции.
- * @author dim0n4eg
  */
 public class Info extends Command {
     private final Console console;

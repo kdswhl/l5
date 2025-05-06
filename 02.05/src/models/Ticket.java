@@ -64,7 +64,7 @@ public class Ticket extends Element implements Validatable, Serializable {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 creationDate = LocalDate.parse(a[3], formatter);
             } catch (DateTimeException e){creationDate = null;};
-            try { price = Double.parseDouble(a[4]);} catch (NumberFormatException e){price = 1.0;}
+            try { price = Double.parseDouble(a[4]);} catch (NumberFormatException e){price = null;}
             comment = a[5];
             try { type = TicketType.valueOf(a[6]);} catch (NullPointerException | IllegalArgumentException  e) { type = null; }
 
@@ -85,7 +85,7 @@ public class Ticket extends Element implements Validatable, Serializable {
         list.add(e.getName());
         list.add(e.getCoordinates().toString());
         list.add(e.getCreationDate().format(DateTimeFormatter.ISO_DATE));
-        list.add(Double.valueOf(e.getPrice()).toString());
+        list.add(e.getPrice()!=null?Double.valueOf(e.getPrice()).toString():"null");
         list.add(e.getComment());
         list.add(e.getType().toString());
         list.add(e.getVenue().toString(true));
@@ -116,7 +116,7 @@ public class Ticket extends Element implements Validatable, Serializable {
         if (name == null || name.isEmpty()) return false;
         if (coordinates == null || !coordinates.validate()) return false;
         if (creationDate == null) return false;
-        if (price<=0) return false;
+        if (price!=null && price<=0) return false;
         if (comment.length()>380) return false;
         if (type==null) return false;
         if (venue==null) return false;
@@ -128,6 +128,7 @@ public class Ticket extends Element implements Validatable, Serializable {
     public int compareTo(Element element) {
         return (int)(this.id - element.getId());
     }
+
 
     public int getId() {return id;}
     public String getName() {return name;}

@@ -56,7 +56,20 @@ public class Venue {
         return address;
     }
 
+    public Integer getId(){ return this.id;}
     public long getCapacity(){return capacity;}
+
+
+
+    public boolean equals(Venue v){
+        if (this.id == v.id
+         //&& this.name == v.name && this.address == v.address && this.capacity == v.capacity
+        ){
+            return true;
+        }
+        return false;
+    }
+
 }
 
 

@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * Управляет командами.
- * @author dim0n4eg
  */
 public class CommandManager {
     private final Map<String, Command> commands = new LinkedHashMap<>();

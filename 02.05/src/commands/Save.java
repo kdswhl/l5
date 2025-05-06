@@ -6,7 +6,6 @@ import utility.ExecutionResponse;
 
 /**
  * Команда 'save'. Сохраняет коллекцию в файл.
- * @author dim0n4eg
  */
 public class Save extends Command {
     private final Console console;

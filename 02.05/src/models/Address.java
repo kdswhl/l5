@@ -26,15 +26,22 @@ public class Address implements Validatable {
 
     @Override
     public String toString() {
+        if (zipCode==null||zipCode.equals("")||zipCode.isEmpty()){
+            return "Address {street: " + street + " ~ " +
+                    "zipCode: null";
+        }
         return "Address {street: " + street + " ~ " +
-                "zipCode: " + zipCode ;
+                "zipCode: "+ zipCode;
     }
 
     public String getStreet(){
         return street;
     }
     public String toString(boolean a) {
-        return  street + " ~ " + zipCode ;
+        if (zipCode==null||zipCode.equals("")||zipCode.isEmpty()){
+            return  street + " ~ null";
+        }
+        return street + " ~ " + zipCode;
     }
 
     @Override

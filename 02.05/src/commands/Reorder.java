@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+
+/**
+ * Команда 'reorder' сортирует коллекцию в обратном порядке.
+ */
 public class Reorder extends Command {
     private final Console console;
     private final CollectionManager collectionManager;
@@ -18,6 +22,10 @@ public class Reorder extends Command {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Выполняет команду
+     * @return Результат выполнения команды.
+     */
     @Override
     public ExecutionResponse apply(String[] arguments) {
         if (!arguments[1].isEmpty()) {
