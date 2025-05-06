@@ -5,8 +5,16 @@ name
 
 
 VIP
+
+
 name
 
 13
+
 street
 null
+
+execute_script src/script
+
+
+execute_script src/script2
